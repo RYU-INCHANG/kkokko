@@ -1,0 +1,555 @@
+/* 기본 설정 */
+:root {
+    --vh: 1vh; /* JavaScript에서 설정될 뷰포트 높이 단위 */
+    --pastel-pink: #FFC0CB;
+    --pastel-blue: #ADD8E6;
+    --pastel-green: #90EE90;
+    --pastel-yellow: #FFFFE0;
+    --pastel-purple: #DDA0DD;
+    --pastel-orange: #FFDAB9;
+    --pastel-white: #F8F8F8; /* 밝은 배경색 */
+    --pastel-dark-text: #4a4a4a; /* 어두운 텍스트색 */
+    --pastel-light-text: #ffffff; /* 밝은 텍스트색 */
+    --pastel-shadow: rgba(0, 0, 0, 0.2);
+    --pastel-light-shadow: rgba(255, 255, 255, 0.5);
+}
+
+body {
+    margin: 0;
+    font-family: 'Jua', sans-serif; /* 기본 폰트 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(var(--vh, 1vh) * 100); /* 뷰포트 높이에 맞춤 */
+    background: linear-gradient(135deg, var(--pastel-blue), var(--pastel-green)); /* 기본 배경 */
+    overflow: hidden; /* 스크롤바 숨김 */
+    -webkit-user-select: none; /* iOS Safari에서 텍스트 선택 방지 */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE/Edge */
+    user-select: none;         /* Standard */
+}
+
+/* 3D 파스텔 버튼/박스 공통 스타일 */
+.pastel-3d {
+    border-radius: 20px;
+    box-shadow: 
+        5px 5px 15px var(--pastel-shadow),
+        -5px -5px 15px var(--pastel-light-shadow);
+    transition: all 0.2s ease-in-out;
+    border: none;
+    box-sizing: border-box; /* 패딩, 보더가 너비에 포함되도록 */
+}
+
+.pastel-3d:active {
+    box-shadow: 
+        2px 2px 5px var(--pastel-shadow) inset,
+        -2px -2px 5px var(--pastel-light-shadow) inset;
+    transform: translateY(2px);
+}
+
+/* 화면 공통 */
+.screen {
+    width: 100%;
+    max-width: 450px; /* 모바일 장치에 적합한 최대 너비 */
+    height: calc(var(--vh, 1vh) * 100);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--pastel-white);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* 내용이 넘칠 경우 스크롤 숨김 */
+}
+
+.hidden {
+    display: none !important; /* V03: 강제 숨김 */
+}
+
+/* 헤더 홍보 영역 */
+.header-promo {
+    width: 100%;
+    height: 30%; /* 전체 화면 높이의 30% */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* 내용을 하단에 배치 */
+    align-items: center;
+    padding-bottom: 20px;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.promo-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 이미지가 잘리지 않고 채워지도록 */
+    filter: brightness(0.8); /* 이미지를 약간 어둡게 */
+    z-index: 0;
+}
+
+.app-title, .room-title {
+    font-family: 'Jua', sans-serif;
+    font-size: 2.5em; /* 폰트 크기 조정 */
+    color: var(--pastel-light-text);
+    margin: 0;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    z-index: 1; /* 이미지 위에 오도록 */
+}
+
+.app-sub-title, .room-sub-title {
+    font-family: 'Dongle', sans-serif;
+    font-size: 1.5em; /* 폰트 크기 조정 */
+    color: var(--pastel-light-text);
+    margin: 5px 0 0;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    z-index: 1;
+}
+
+/* 메인 화면 (남성/여성 테마) */
+.main-female-theme .header-promo { background-color: var(--pastel-pink); }
+.main-male-theme .header-promo { background-color: var(--pastel-blue); }
+.schedule-room-theme .header-promo { background-color: var(--pastel-green); }
+.memo-room-theme .header-promo { background-color: var(--pastel-purple); }
+
+
+.main-buttons {
+    display: flex;
+    flex-direction: column; /* 세로 방향으로 정렬 */
+    gap: 15px; /* 버튼 사이 간격 */
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+    flex-grow: 1; /* 남은 공간을 채우도록 */
+    justify-content: center; /* 버튼들을 중앙에 배치 */
+    margin-bottom: 70px; /* 네비바 공간 확보 */
+}
+
+.menu-button {
+    width: 100%; /* 너비 꽉 채움 */
+    height: 80px; /* 버튼 높이 */
+    display: flex;
+    align-items: center;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    padding: 0 30px; /* 좌우 패딩 */
+    font-size: 1.8em; /* 텍스트 크기 */
+    color: var(--pastel-dark-text);
+    background-color: var(--pastel-white);
+}
+
+.menu-button img {
+    width: 40px; /* 아이콘 크기 */
+    height: 40px;
+    margin-right: 20px; /* 아이콘과 텍스트 사이 간격 */
+}
+
+.full-width-button {
+    /* 특정 버튼에 대한 추가 스타일이 필요하면 여기에 */
+}
+
+/* 네비게이션 바 */
+.navbar {
+    width: 100%;
+    height: 60px; /* 네비바 높이 */
+    background-color: var(--pastel-white);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+    z-index: 100; /* 다른 요소 위에 오도록 */
+}
+
+.navbar button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    outline: none;
+}
+
+.navbar button img {
+    width: 30px;
+    height: 30px;
+    display: block; /* 이미지 정렬을 위해 */
+}
+
+/* 팝업 공통 스타일 */
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200; /* 모든 화면 위에 오도록 */
+}
+
+.popup-content {
+    background-color: var(--pastel-white);
+    padding: 30px 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px; /* 내부 요소 간격 */
+    width: 90%;
+    max-width: 400px;
+}
+
+.popup-title {
+    font-family: 'Jua', sans-serif;
+    font-size: 2em;
+    color: var(--pastel-dark-text);
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.popup-sub-title {
+    font-family: 'Dongle', sans-serif;
+    font-size: 1.2em;
+    color: var(--pastel-dark-text);
+    margin: 0 0 15px 0;
+    text-align: center;
+}
+
+.close-popup-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    color: #888;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 10;
+}
+
+.close-popup-button.single-button {
+    position: static; /* 절대 위치 해제 */
+    margin-top: 20px;
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: var(--pastel-pink); /* 버튼 색상 */
+    color: var(--pastel-light-text);
+    font-size: 1.2em;
+    box-shadow: 3px 3px 8px var(--pastel-shadow);
+}
+.close-popup-button.single-button:active {
+    box-shadow: 1px 1px 3px var(--pastel-shadow) inset;
+    transform: translateY(1px);
+}
+
+
+/* 목소리 선택 팝업 */
+.character-selection-buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    gap: 15px;
+}
+
+.character-button {
+    background-color: var(--pastel-yellow);
+    color: var(--pastel-dark-text);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 150px;
+    font-size: 1.2em;
+    padding: 10px;
+    text-align: center;
+}
+
+.character-button img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 5px;
+}
+.character-button:nth-child(2) {
+    background-color: var(--pastel-orange); /* 호랑이 버튼 색상 */
+}
+
+
+/* 일정 등록 팝업 - image_63051d.png 스타일 반영 */
+.popup-content.flat-design-popup {
+    background-color: #f7f7f7; /* 스크린샷과 유사한 밝은 배경 */
+    border: 1px solid #ccc; /* 얇은 회색 테두리 */
+    border-radius: 10px; /* 약간 둥근 모서리 */
+    box-shadow: none; /* 3D 그림자 제거 */
+    padding: 20px; /* 패딩 조정 */
+    width: 95%; /* 너비 조정 */
+    max-width: 450px; /* 최대 너비 */
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* 입력 그룹 간 간격 */
+}
+
+/* 팝업 닫기 (X) 버튼 스타일 */
+.close-popup-button-flat {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background-color: #ff4d4d; /* 빨간색 */
+    color: white;
+    border: none;
+    border-radius: 50%; /* 원형 */
+    width: 28px; /* 크기 */
+    height: 28px;
+    font-size: 1.1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.2); /* 작은 그림자 */
+    transition: all 0.1s ease-in-out;
+}
+.close-popup-button-flat:active {
+    transform: translateY(1px);
+    box-shadow: 0px 0px 1px rgba(0,0,0,0.2) inset;
+}
+
+/* 팝업 타이틀 (일정 입력) 스타일 */
+.popup-title-flat {
+    font-family: 'Jua', sans-serif;
+    font-size: 1.8em; /* 폰트 크기 */
+    color: var(--pastel-dark-text); /* 기존 텍스트 색상 */
+    margin-top: 0;
+    margin-bottom: 5px; /* 마진 조정 */
+    text-align: center;
+    width: 100%;
+    background-color: transparent; /* 배경 없음 */
+}
+
+/* 입력 그룹 (라벨 + 입력 필드) */
+.input-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 라벨을 왼쪽 정렬 */
+    gap: 5px; /* 라벨과 입력 필드 사이 간격 */
+}
+
+.input-group label {
+    font-family: 'Dongle', sans-serif; /* 라벨 폰트 */
+    font-size: 1.3em;
+    color: #555; /* 어두운 회색 */
+    margin-left: 5px; /* 약간 들여쓰기 */
+}
+
+/* 모든 일반 입력 필드 (날짜, 시간, 텍스트, select) 스타일 */
+.flat-input,
+.flat-textarea {
+    width: calc(100% - 22px); /* 패딩 및 테두리 고려한 너비 */
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc; /* 얇은 테두리 */
+    border-radius: 5px; /* 약간 둥근 모서리 */
+    background-color: white;
+    color: var(--pastel-dark-text);
+    box-sizing: border-box; /* 패딩, 보더가 너비에 포함되도록 */
+    box-shadow: none; /* 그림자 제거 */
+}
+
+/* 텍스트 영역 (내용) 스타일 */
+.flat-textarea {
+    min-height: 80px; /* 최소 높이 */
+    resize: vertical; /* 세로로만 크기 조절 가능 */
+}
+
+/* 라디오 버튼 그룹 (알림 주기) 스타일 */
+.radio-group {
+    display: flex;
+    gap: 15px; /* 라디오 버튼 사이 간격 */
+    align-items: center;
+    padding-left: 5px; /* 입력 필드와 정렬 */
+}
+
+.radio-group input[type="radio"] {
+    transform: scale(1.2); /* 라디오 버튼 약간 크게 */
+}
+
+.radio-group label {
+    font-size: 1em; /* 라벨 폰트 크기 */
+    color: var(--pastel-dark-text);
+    margin-left: 5px; /* 라디오 버튼과 라벨 사이 간격 */
+}
+
+/* 하단 버튼 그룹 (저장, 불러오기, 새로쓰기) */
+.button-row-flat {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 10px; /* 버튼 위 여백 */
+    gap: 10px; /* 버튼 사이 간격 */
+}
+
+/* 공통 버튼 스타일 */
+.flat-button {
+    flex: 1; /* 공간 균등 분배 */
+    height: 45px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.2); /* 작은 그림자 */
+    transition: all 0.2s ease;
+}
+
+.flat-button:active {
+    box-shadow: 0px 0px 1px rgba(0,0,0,0.2) inset;
+    transform: translateY(1px);
+}
+
+/* 저장 버튼 스타일 */
+.save-button-flat {
+    background-color: #4CAF50; /* 녹색 */
+    color: white;
+}
+
+/* 불러오기 버튼 스타일 */
+.load-button-flat {
+    background-color: #ffc107; /* 주황색 */
+    color: var(--pastel-dark-text);
+}
+
+/* 새로쓰기 버튼 스타일 */
+.new-button-flat {
+    background-color: #e0e0e0; /* 밝은 회색 */
+    color: var(--pastel-dark-text);
+}
+
+
+/* 일정방 / 메모방 */
+.schedule-content-area, .memo-content-area {
+    flex-grow: 1; /* 남은 공간 채우기 */
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto; /* 내용이 길어지면 스크롤 */
+    margin-bottom: 70px; /* 네비바 공간 확보 */
+}
+
+.schedule-list, .memo-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.schedule-item, .memo-item {
+    background-color: var(--pastel-white);
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 3px 3px 8px var(--pastel-shadow);
+    color: var(--pastel-dark-text);
+    cursor: pointer;
+}
+
+.schedule-time {
+    font-family: 'Dongle', sans-serif;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-right: 10px;
+}
+.schedule-content {
+    font-size: 1.1em;
+}
+
+.no-data {
+    text-align: center;
+    color: #888;
+    margin-top: 50px;
+    font-size: 1.1em;
+}
+
+.room-buttons-bottom {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    gap: 15px;
+    position: absolute; /* 하단에 고정 */
+    bottom: 60px; /* 네비바 위 */
+    background-color: var(--pastel-white); /* 겹치는 부분 배경 */
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); /* 경계선 그림자 */
+    z-index: 50;
+}
+
+.room-button {
+    flex: 1;
+    height: 50px;
+    font-size: 1.2em;
+    color: var(--pastel-dark-text);
+    background-color: var(--pastel-white);
+}
+
+/* 메모방 새 글 쓰기 버튼 */
+.new-memo-button {
+    background-color: var(--pastel-yellow);
+    color: var(--pastel-dark-text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 180px;
+    height: 50px;
+    font-size: 1.2em;
+    position: absolute;
+    bottom: 80px; /* 네비바와 하단 여백 위 */
+    right: 20px;
+}
+
+.new-memo-button img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+}
+
+/* 메모 목록 네비게이션 (앞으로/뒤로) */
+.memo-list-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px; /* 버튼과 텍스트 사이 간격 */
+    padding: 10px 0;
+    width: 100%;
+    font-family: 'Jua', sans-serif;
+    font-size: 1.5em;
+    color: var(--pastel-dark-text);
+    position: absolute;
+    bottom: 10px; /* 네비바 바로 위 */
+    background-color: var(--pastel-white); /* 배경 색상 */
+    z-index: 50;
+}
+
+.memo-list-navigation button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    outline: none;
+}
+
+.memo-list-navigation button img {
+    width: 35px;
+    height: 35px;
+    display: block;
+}
+
+/* 오디오 요소 숨기기 */
+.hidden-audio {
+    display: none;
+}

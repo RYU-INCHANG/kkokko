@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>나의 일정 관리 앱</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dongle&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Voice Selection Popup -->
+    <div id="voice-selection-popup" class="popup">
+        <div class="popup-content pastel-3d">
+            <h2 class="popup-title">목소리 선택</h2>
+            <p class="popup-sub-title">시작할 캐릭터를 선택해주세요</p>
+            <div class="character-selection-buttons">
+                <button id="select-chicken" class="character-button pastel-3d">
+                    <img src="images/characters/chicken.png" alt="귀여운 닭 캐릭터">
+                    <span>귀여운 닭</span>
+                </button>
+                <button id="select-tiger" class="character-button pastel-3d">
+                    <img src="images/characters/tiger.png" alt="용맹한 호랑이 캐릭터">
+                    <span>용맹한 호랑이</span>
+                </button>
+            </div>
+            <!-- 팝업 닫기 버튼은 첫 선택 팝업에서는 필요 없으므로 주석 처리 -->
+            <!-- <button class="close-popup-button" data-popup="voice-selection-popup">닫기</button> -->
+        </div>
+    </div>
+
+    <!-- Main Screen - Female Version -->
+    <div id="main-screen-female" class="screen hidden main-female-theme">
+        <div class="header-promo female-theme">
+            <img src="images/common/main_female_promo.png" alt="메인 페이지 홍보 이미지" class="promo-image">
+            <h1 class="app-title">나의 일정 다이어리</h1>
+            <p class="app-sub-title">사랑스러운 하루를 기록하세요</p>
+        </div>
+        <div class="main-buttons">
+            <button id="btn-today-schedule-female" class="menu-button pastel-3d">
+                <img src="images/icons/calendar_icon.png" alt="오늘 일정">
+                <span>오늘 일정</span>
+            </button>
+            <button id="btn-memo-register-female" class="menu-button pastel-3d">
+                <img src="images/icons/pen_icon.png" alt="메모 등록">
+                <span>메모 등록</span>
+            </button>
+            <button id="btn-schedule-register-female" class="menu-button full-width-button pastel-3d">
+                <img src="images/icons/check_icon.png" alt="일정 등록">
+                <span>일정 등록</span>
+            </button>
+        </div>
+        <div class="navbar">
+            <button id="nav-back"><img src="images/icons/back_icon.png" alt="뒤로"></button>
+            <button id="nav-home"><img src="images/icons/home_icon.png" alt="홈"></button>
+            <button id="nav-forward"><img src="images/icons/forward_icon.png" alt="앞으로"></button>
+        </div>
+    </div>
+
+    <!-- Main Screen - Male Version -->
+    <div id="main-screen-male" class="screen hidden main-male-theme">
+        <div class="header-promo male-theme">
+            <img src="images/common/main_male_promo.png" alt="메인 페이지 홍보 이미지" class="promo-image">
+            <h1 class="app-title">나의 일정 마스터</h1>
+            <p class="app-sub-title">강력한 하루를 설계하세요</p>
+        </div>
+        <div class="main-buttons">
+            <button id="btn-today-schedule-male" class="menu-button pastel-3d">
+                <img src="images/icons/calendar_icon.png" alt="오늘 일정">
+                <span>오늘 일정</span>
+            </button>
+            <button id="btn-memo-register-male" class="menu-button pastel-3d">
+                <img src="images/icons/pen_icon.png" alt="메모 등록">
+                <span>메모 등록</span>
+            </button>
+            <button id="btn-schedule-register-male" class="menu-button full-width-button pastel-3d">
+                <img src="images/icons/check_icon.png" alt="일정 등록">
+                <span>일정 등록</span>
+            </button>
+        </div>
+        <div class="navbar">
+            <button id="nav-back"><img src="images/icons/back_icon.png" alt="뒤로"></button>
+            <button id="nav-home"><img src="images/icons/home_icon.png" alt="홈"></button>
+            <button id="nav-forward"><img src="images/icons/forward_icon.png" alt="앞으로"></button>
+        </div>
+    </div>
+
+    <!-- Today's Schedule Screen -->
+    <div id="today-schedule-screen" class="screen hidden schedule-room-theme">
+        <div class="header-promo schedule-theme">
+            <img src="images/common/schedule_room_promo.png" alt="일정방 홍보 이미지" class="promo-image">
+            <h1 class="room-title">오늘의 일정</h1>
+            <p class="room-sub-title">놓치지 마세요!</p>
+        </div>
+        <div class="schedule-content-area">
+            <div id="schedule-list-display" class="schedule-list">
+                <!-- 일정 목록이 여기에 동적으로 추가됩니다 -->
+            </div>
+        </div>
+        <div class="room-buttons-bottom">
+            <button id="btn-other-schedule" class="room-button pastel-3d">다른 일정</button>
+            <button id="btn-register-from-schedule-room" class="room-button pastel-3d">일정 등록</button>
+        </div>
+        <div class="navbar">
+            <button id="nav-back"><img src="images/icons/back_icon.png" alt="뒤로"></button>
+            <button id="nav-home"><img src="images/icons/home_icon.png" alt="홈"></button>
+            <button id="nav-forward"><img src="images/icons/forward_icon.png" alt="앞으로"></button>
+        </div>
+    </div>
+
+    <!-- Memo List Screen -->
+    <div id="memo-list-screen" class="screen hidden memo-room-theme">
+        <div class="header-promo memo-theme">
+            <img src="images/common/memo_room_promo.png" alt="메모방 홍보 이미지" class="promo-image">
+            <h1 class="room-title">메모의 달인</h1>
+            <p class="room-sub-title">기억력 믿지 마유~~~</p>
+        </div>
+        <div class="memo-content-area">
+            <div id="memo-list-display" class="memo-list">
+                <!-- 메모 목록이 여기에 동적으로 추가됩니다 -->
+            </div>
+            <button id="btn-new-memo" class="new-memo-button pastel-3d">
+                <img src="images/icons/new_memo_icon.png" alt="새 글 쓰기">
+                <span>새 글 쓰기</span>
+            </button>
+        </div>
+        <div class="memo-list-navigation">
+            <button id="btn-memo-prev"><img src="images/icons/list_back_icon.png" alt="뒤로"></button>
+            <span>글목록</span>
+            <button id="btn-memo-next"><img src="images/icons/list_forward_icon.png" alt="앞으로"></button>
+        </div>
+        <div class="navbar">
+            <button id="nav-back"><img src="images/icons/back_icon.png" alt="뒤로"></button>
+            <button id="nav-home"><img src="images/icons/home_icon.png" alt="홈"></button>
+            <button id="nav-forward"><img src="images/icons/forward_icon.png" alt="앞으로"></button>
+        </div>
+    </div>
+
+    <!-- Schedule Register Popup (V03 Flat Design) -->
+    <div id="schedule-register-popup" class="popup hidden"> <!-- 초기에는 숨김 처리 -->
+        <div class="popup-content flat-design-popup">
+            <button class="close-popup-button-flat" data-popup="schedule-register-popup">X</button>
+            <h2 class="popup-title-flat">일정 입력</h2>
+
+            <div class="input-group">
+                <label for="schedule-date-input">날짜:</label>
+                <input type="date" id="schedule-date-input" class="flat-input">
+            </div>
+
+            <div class="input-group">
+                <label for="schedule-time-input">시간:</label>
+                <input type="time" id="schedule-time-input" class="flat-input">
+            </div>
+
+            <div class="input-group">
+                <label for="schedule-alarm-time-input">알림 시간:</label>
+                <input type="time" id="schedule-alarm-time-input" class="flat-input">
+            </div>
+
+            <div class="input-group">
+                <label>알림 주기:</label>
+                <div class="radio-group">
+                    <input type="radio" id="alarm-once" name="alarm-frequency" value="once" checked>
+                    <label for="alarm-once">1회</label>
+                    <input type="radio" id="alarm-daily" name="alarm-frequency" value="daily">
+                    <label for="alarm-daily">매일</label>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label for="schedule-type-select">유형:</label>
+                <select id="schedule-type-select" class="flat-input">
+                    <option value="">선택하세요</option>
+                    <option value="meeting">회의</option>
+                    <option value="appointment">약속</option>
+                    <option value="personal">개인</option>
+                    <option value="etc">기타</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label for="schedule-content-textarea">내용:</label>
+                <textarea id="schedule-content-textarea" class="flat-textarea" placeholder="일정 내용을 입력하세요."></textarea>
+            </div>
+
+            <div class="button-row-flat">
+                <button id="save-schedule-flat" class="flat-button save-button-flat">저장</button>
+                <button id="load-schedule-flat" class="flat-button load-button-flat">불러오기</button>
+                <button id="new-schedule-flat" class="flat-button new-button-flat">새로쓰기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Memo Input Popup -->
+    <div id="memo-input-popup" class="popup hidden"> <!-- 초기에는 숨김 처리 -->
+        <div class="popup-content pastel-3d">
+            <button class="close-popup-button top-right" data-popup="memo-input-popup">X</button>
+            <h2 class="popup-title">새 글 쓰기</h2>
+            <input type="text" id="memo-title-input" class="text-input pastel-3d" placeholder="제목">
+            <textarea id="memo-content-input" class="text-input-area pastel-3d" placeholder="메모 내용을 입력하세요."></textarea>
+            <button id="save-memo-button" class="save-button pastel-3d">
+                <img src="images/icons/save_icon.png" alt="저장">
+                <span>저장</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Coming Soon Popup -->
+    <div id="coming-soon-popup" class="popup hidden">
+        <div class="popup-content pastel-3d coming-soon-content">
+            <h2 class="popup-title">준비중입니다!</h2>
+            <p class="popup-sub-title">더 나은 기능으로 찾아올게요!</p>
+            <button class="close-popup-button single-button" data-popup="coming-soon-popup">확인</button>
+        </div>
+    </div>
+
+    <!-- Audio elements for character voices -->
+    <audio id="chicken-audio" src="audio/chicken_crow.mp3" preload="auto" class="hidden-audio"></audio>
+    <audio id="tiger-audio" src="audio/tiger_roar.mp3" preload="auto" class="hidden-audio"></audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
